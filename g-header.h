@@ -41,12 +41,22 @@ protected:
     Gtk::Label lab_4_3_6,lab_4_3_7;
     Gtk::SpinButton spb_4_3_1,spb_4_3_2;
 
+    ///predefined_fxn_setup members
+    Gtk::Grid p_grid_3_4;
+    Gtk::Label lab_3_4_1,lab_3_4_2,lab_3_4_3,lab_3_4_4;
+    Gtk::TextView tv_3_4_1;
+    Gtk::ComboBoxText cbt_3_4_1;
+    Gtk::Entry ent_3_4_1,ent_3_4_2;
+    Gtk::Button but_3_4_1,but_3_4_2,but_3_4_3,but_3_4_4;
+
+
     //Member functions
     void init_architecture();
     void stage_position_setup();
     void x_axis_setup();
     void y_axis_setup();
-
-
+    void predefined_fxns_setup();
+    void button_signals();
+    void on_qbutton_clicked();
 
 };

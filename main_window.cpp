@@ -4,13 +4,16 @@
 
 MWindow::MWindow()
 {
+    //Call functions to construct architechture
     init_architecture();
     stage_position_setup();
     x_axis_setup();
     y_axis_setup();
+    predefined_fxns_setup();
+    button_signals();
 
+    //Show everything
     show_all_children();
-    //Call functions to construct architechture
 }
 
 //Destructor
@@ -18,6 +21,7 @@ MWindow::~MWindow()
 {
 }
 
+///Architecture Functions
 ///Function to setup the base architecture
 void MWindow::init_architecture()
 {
@@ -301,5 +305,90 @@ void MWindow::y_axis_setup()
     spb_4_3_2.set_value(default_val);
     spb_4_3_2.set_increments(default_increment,default_pg_increment);
     spb_4_3_2.set_wrap(true);
+}
+
+///Function to setup Predefined Functions box
+void MWindow::predefined_fxns_setup()
+{
+    //Add grid to parent container
+    b_2_4_1.add(p_grid_3_4);
+
+    //Populate grid
+    for(int j=0;j<10;j++)
+    {
+        if(j<3)
+        {
+            p_grid_3_4.insert_row(j);
+            p_grid_3_4.insert_column(j);
+        }
+        else
+        {
+            p_grid_3_4.insert_row(j);
+        }
+    }
+
+    ///Row 0
+    p_grid_3_4.attach(lab_3_4_1,0,0);
+    p_grid_3_4.attach(but_3_4_1,2,0);
+
+    //Labels & Styling
+    lab_3_4_1.set_label("Predefined Functions");
+    but_3_4_1.set_label("Quit");
+
+    ///Row 1/2/3
+    p_grid_3_4.attach(tv_3_4_1,0,1,3,3);
+
+    ///Row 4
+    p_grid_3_4.attach(lab_3_4_2,0,4,1,1);
+
+    //Labels & Styling
+    lab_3_4_2.set_label("Select Function Below");
+
+    ///Row 5
+    p_grid_3_4.attach(cbt_3_4_1,0,5,2,1);
+    p_grid_3_4.attach(but_3_4_4,2,5);
+
+    //Labels & Styling
+    but_3_4_4.set_label("Begin");
+
+    ///Row 6
+    p_grid_3_4.attach(lab_3_4_3,0,6,2,1);
+
+    //Labels & Styling
+    lab_3_4_3.set_label("Save Parameters As:");
+
+    ///Row 7
+    p_grid_3_4.attach(ent_3_4_1,0,7,2,1);
+    p_grid_3_4.attach(but_3_4_2,2,7);
+
+    //Labels & Styling
+    but_3_4_2.set_label("Save");
+
+    ///Row 8
+    p_grid_3_4.attach(lab_3_4_4,0,8,2,1);
+
+    //Labels & Styling
+    lab_3_4_4.set_label("Load Parameters");
+
+    ///Row 9
+    p_grid_3_4.attach(ent_3_4_2,0,9,2,1);
+    p_grid_3_4.attach(but_3_4_3,2,9);
+
+    //Labels & Styling
+    but_3_4_3.set_label("Load");
+
+}
+///End of Architecture Functions
+
+///Function to define button signals
+void MWindow::button_signals()
+{
+    but_3_4_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_qbutton_clicked));
+}
+
+///Function to define button responses
+void MWindow::on_qbutton_clicked()
+{
+    hide();
 }
 
