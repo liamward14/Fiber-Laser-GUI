@@ -277,6 +277,29 @@ void MWindow::y_axis_setup()
     but_4_3_5.set_label(">>>>");
 
     ///Row 2
+    p_grid_3_3.attach(lab_4_3_6,0,2,2,1);
+    p_grid_3_3.attach(spb_4_3_1,2,2);
 
+    //Labels & Styling
+    lab_4_3_6.set_label("Step Size (\u03BCm)");
+    //spb_4_3_1
+    spb_4_3_1.set_range(default_min,default_max);
+    spb_4_3_1.set_value(default_val);
+    spb_4_3_1.set_increments(default_increment,default_pg_increment);
+    spb_4_3_1.set_wrap(true);
+
+    ///Row 3
+    p_grid_3_3.attach(lab_4_3_7,0,3,2,1);
+    p_grid_3_3.attach(spb_4_3_2,2,3);
+    p_grid_3_3.attach(but_4_3_6,3,3,2,1);
+
+    //Labels & Styling
+    lab_4_3_7.set_label("Velocity (\u03BCm/s)");
+    but_4_3_6.set_label("Home Y");
+    //spb_4_3_2
+    spb_4_3_2.set_range(default_min,default_max);
+    spb_4_3_2.set_value(default_val);
+    spb_4_3_2.set_increments(default_increment,default_pg_increment);
+    spb_4_3_2.set_wrap(true);
 }
 
