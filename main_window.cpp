@@ -338,6 +338,9 @@ void MWindow::predefined_fxns_setup()
     ///Row 1/2/3
     p_grid_3_4.attach(tv_3_4_1,0,1,3,3);
 
+    //Labels & Styling
+    tv_3_4_1.set_size_request(20,100);
+
     ///Row 4
     p_grid_3_4.attach(lab_3_4_2,0,4,1,1);
 
