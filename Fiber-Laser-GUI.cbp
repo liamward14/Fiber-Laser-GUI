@@ -31,8 +31,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add option="`pkg-config gtkmm-3.0 --cflags`" />
 		</Compiler>
+		<Linker>
+			<Add option="`pkg-config gtkmm-3.0 --libs`" />
+		</Linker>
+		<Unit filename="g-header.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main_window.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
