@@ -478,27 +478,51 @@ void MWindow::on_qbutton_clicked()
 ///Function to define save button response
 void MWindow::on_save_button_clicked()
 {
+
     //Open settings file
     const char *f_name = "saved_settings.txt";
     FILE *fh;
 
     FL_settings user_settings;
     //Process: get from buffer, retrieve ustring, retrieve as const char *, convert to float
-    user_settings.name = ent_3_4_1.get_buffer()->get_text();
+    Glib::ustring name = ent_3_4_1.get_buffer()->get_text();
+    if (name[0]=='\0')
+    {
+        int result = on_no_name();
+        return;
+    }
+    user_settings.name = name;
     user_settings.abs_x = (float )atof((ent_4_1_1.get_buffer()->get_text()).data());
     user_settings.abs_y = (float )atof((ent_4_1_2.get_buffer()->get_text()).data());
     user_settings.origin[0] = 0;
     user_settings.origin[1] = 0; //need to figure out how to change these later??
-    user_settings.shutter_status = 1; //need to configure (either 1 or 0)
+    int shutter_status;
+    if (open)
+    {
+        shutter_status=1;//shutter open
+    }
+    else
+    {
+        shutter_status=0;//shutter closed
+    }
+    user_settings.shutter_status = shutter_status; //need to configure (either 1 or 0)
 
     fh = fopen(f_name,"a");
     if (fh==NULL)
     {
         //Could not open file
-        //Need to put some sort of indicator here (pop-up window)
-        exit(1);
+        int result = on_save_error();
+        switch(result)
+        {
+        case(Gtk::RESPONSE_OK):
+            return;
+        default:
+            std::cout<<"Unexpected click"<<std::endl;
+            break;
+        }
+
     }
-    fprintf(fh,"%s\n%f\n%f\n%f\t%f\n%d\n\n",
+    fprintf(fh,"Name:%s,\nx:%f,\ny:%f,\norigin:(%f,%f),\nshutter:%d\n\n",
                     (user_settings.name).c_str(),
                     user_settings.abs_x,
                     user_settings.abs_y,
@@ -507,6 +531,8 @@ void MWindow::on_save_button_clicked()
                     user_settings.shutter_status);
     fclose(fh);
 
+    //Saved successfully
+    on_save_success();
 }
 
 ///Function to define 'open' shutter button response
@@ -520,6 +546,7 @@ void MWindow::on_open_button_clicked()
 
     //remove 'Close' color indicator
     css_provider_close->load_from_data("label {background-image: image(transparent);}");
+    open = true; //set open indicator to true
 
 }
 
@@ -534,9 +561,38 @@ void MWindow::on_close_button_clicked()
 
     //remove 'Open' color indicator
     css_provider_open->load_from_data("label {background-image: image(transparent);}");
-
+    open = false; //set open indiciator to false
 }
 
+///Function to define error message for saving settings
+int MWindow::on_save_error()
+{
+    Gtk::MessageDialog dialog(*this,
+    "Error saving settings.\nPlease review the text file\nholding user-save settings.",
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    int result = dialog.run();
+    return result;
+}
+
+///Function to prompt user for saved settings name
+int MWindow::on_no_name()
+{
+    Gtk::MessageDialog dialog(*this,
+    "Please enter a name to save the settings under.",
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    int result = dialog.run();
+    return result;
+}
+
+///Function to display success dialog for saving settings
+void MWindow::on_save_success()
+{
+    Gtk::MessageDialog dialog(*this,
+    "Settings saved successfully!",
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+    ent_3_4_1.get_buffer()->set_text("");
+}
 //Other stuff (including global vars needed) are defined below:
 //static int counter=0;
 

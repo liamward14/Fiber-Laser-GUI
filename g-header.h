@@ -2,8 +2,8 @@
 #include <cstdio>
 #include <iostream>
 
-//Define Window class
-
+///Class definitions
+//Define Main Window class
 class MWindow : public Gtk::Window
 {
 public:
@@ -71,10 +71,35 @@ protected:
     void on_save_button_clicked();
     void on_open_button_clicked();
     void on_close_button_clicked();
+    int on_save_error();
+    void on_save_success();
+    int on_no_name();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
+    bool open = false; //this is for saving shutter settings (find better soln??)
 
 };
 
+
+/*
+//Class for dialog window corresponding to File IO error
+class FIO_Dialog : public Gtk::Window
+{
+public:
+    FIO_Dialog(); //constrcutor
+    ~FIO_Dialog(); //destructor
+
+protected:
+    ///Gtk Widget members
+    Gtk::ButtonBox p_box;
+    Gtk::Button but_1; //confirm button
+    Gtk::Button but_2; //question button
+
+    ///Member functions
+    void on_confirm_button_clicked();
+    void on_question_button_clicked();
+};*/
+
+///Other important definitions
 //Structure type def to hold settings data
 typedef struct settings
 {
