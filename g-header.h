@@ -54,7 +54,10 @@ protected:
     Gtk::Grid p_grid_3_5;
     Gtk::Button but_3_5_1,but_3_5_2;
     Gtk::Label lab_3_5_1,lab_5_pad_1,lab_5_pad_2,lab_5_pad_3;
-
+    Gtk::Label *lab_3_5_2 = new Gtk::Label("Open"); //Open label
+    Glib::RefPtr<Gtk::CssProvider> css_provider_open = Gtk::CssProvider::create();
+    Gtk::Label *lab_3_5_3 = new Gtk::Label("Closed"); //Close label
+    Glib::RefPtr<Gtk::CssProvider> css_provider_close = Gtk::CssProvider::create();
 
     //Member functions
     void init_architecture();
@@ -66,6 +69,9 @@ protected:
     void button_signals();
     void on_qbutton_clicked();
     void on_save_button_clicked();
+    void on_open_button_clicked();
+    void on_close_button_clicked();
+    int counter=0; //this is for the shutter status fxn (temporary soln.)
 
 };
 

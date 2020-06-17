@@ -407,18 +407,8 @@ void MWindow::shutter_control_setup()
     }
 
     //Style Provider Construction (need to make Labels in a special way)
-    //Open label
-    Gtk::Label *lab_3_5_2 = new Gtk::Label("Open");
-    Glib::RefPtr<Gtk::CssProvider> css_provider = Gtk::CssProvider::create();
-    css_provider->load_from_data("label {background-image: image(lime);}");
-    lab_3_5_2->get_style_context()->add_provider(
-    css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-    Gtk::Label *lab_3_5_3 = new Gtk::Label("Closed");
-    Glib::RefPtr<Gtk::CssProvider> css_provider2 = Gtk::CssProvider::create();
-    css_provider2->load_from_data("label {background-image: image(red);}");
-    lab_3_5_3->get_style_context()->add_provider(
-    css_provider2, GTK_STYLE_PROVIDER_PRIORITY_USER);
+    css_provider_open->load_from_data("label {background-image: image(lime);}");
+    css_provider_close->load_from_data("label {background-image: image(red);}");
 
     ///Row 0
     p_grid_3_5.attach(but_3_5_1,0,0);
@@ -429,6 +419,7 @@ void MWindow::shutter_control_setup()
     lab_3_5_1.set_hexpand(true);
     but_3_5_1.set_label("Open");
     but_3_5_1.set_label("Open");
+    but_3_5_1.set_size_request(70,10);
 
     ///Row 1
     p_grid_3_5.attach(but_3_5_2,0,1);
@@ -449,6 +440,18 @@ void MWindow::shutter_control_setup()
     lab_5_pad_1.set_size_request(padding_width,padding_height);
     lab_5_pad_2.set_size_request(padding_width,padding_height);
     lab_5_pad_3.set_size_request(padding_width,padding_height);
+    but_3_5_2.set_size_request(70,10);
+
+    if (counter==0)
+    {
+         //Set color indiciator
+        lab_3_5_3->get_style_context()->add_provider(
+        css_provider_close, GTK_STYLE_PROVIDER_PRIORITY_USER);
+        css_provider_close->load_from_data("label {background-image: image(red);}"); //set bkgrnd img
+        counter++;
+    }
+
+
     //lab_3_5_2.set_label("Open");
     //lab_3_5_3.set_label("Closed");
 
@@ -462,14 +465,17 @@ void MWindow::button_signals()
 {
     but_3_4_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_qbutton_clicked));
     but_3_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_save_button_clicked));
+    but_3_5_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_open_button_clicked));
+    but_3_5_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_close_button_clicked));
 }
 
-///Function to define button responses
+///Function to define quit button response
 void MWindow::on_qbutton_clicked()
 {
     hide();
 }
 
+///Function to define save button response
 void MWindow::on_save_button_clicked()
 {
     //Open settings file
@@ -502,4 +508,36 @@ void MWindow::on_save_button_clicked()
     fclose(fh);
 
 }
+
+///Function to define 'open' shutter button response
+void MWindow::on_open_button_clicked()
+{
+    css_provider_open->load_from_data("label {background-image: image(lime);}"); //reset bkgrnd img
+
+    //Set colour indicator
+    lab_3_5_2->get_style_context()->add_provider(
+    css_provider_open, GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    //remove 'Close' color indicator
+    css_provider_close->load_from_data("label {background-image: image(transparent);}");
+
+}
+
+///Function to define 'close' shutter button response
+void MWindow::on_close_button_clicked()
+{
+    css_provider_close->load_from_data("label {background-image: image(red);}"); //reset bkgrnd img
+
+    //Set color indiciator
+    lab_3_5_3->get_style_context()->add_provider(
+    css_provider_close, GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    //remove 'Open' color indicator
+    css_provider_open->load_from_data("label {background-image: image(transparent);}");
+
+}
+
+//Other stuff (including global vars needed) are defined below:
+//static int counter=0;
+
 
