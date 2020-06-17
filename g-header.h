@@ -1,5 +1,6 @@
 #include <gtkmm-3.0/gtkmm.h>
 #include <cstdio>
+#include <iostream>
 
 //Define Window class
 
@@ -49,6 +50,11 @@ protected:
     Gtk::Entry ent_3_4_1,ent_3_4_2;
     Gtk::Button but_3_4_1,but_3_4_2,but_3_4_3,but_3_4_4;
 
+    ///shutter_control_setup members
+    Gtk::Grid p_grid_3_5;
+    Gtk::Button but_3_5_1,but_3_5_2;
+    Gtk::Label lab_3_5_1,lab_5_pad_1,lab_5_pad_2,lab_5_pad_3;
+
 
     //Member functions
     void init_architecture();
@@ -56,7 +62,21 @@ protected:
     void x_axis_setup();
     void y_axis_setup();
     void predefined_fxns_setup();
+    void shutter_control_setup();
     void button_signals();
     void on_qbutton_clicked();
+    void on_save_button_clicked();
 
 };
+
+//Structure type def to hold settings data
+typedef struct settings
+{
+    Glib::ustring name;
+    float abs_x;
+    float abs_y;
+    float origin[2];
+    int shutter_status;
+}FL_settings;
+
+

@@ -10,6 +10,7 @@ MWindow::MWindow()
     x_axis_setup();
     y_axis_setup();
     predefined_fxns_setup();
+    shutter_control_setup();
     button_signals();
 
     //Show everything
@@ -353,6 +354,9 @@ void MWindow::predefined_fxns_setup()
 
     //Labels & Styling
     but_3_4_4.set_label("Begin");
+    cbt_3_4_1.append("None");
+    cbt_3_4_1.append("Sample Function 1");
+    cbt_3_4_1.append("Sample Function 2");
 
     ///Row 6
     p_grid_3_4.attach(lab_3_4_3,0,6,2,1);
@@ -381,17 +385,121 @@ void MWindow::predefined_fxns_setup()
     but_3_4_3.set_label("Load");
 
 }
+
+///Function to setup Shutter Control Box
+void MWindow::shutter_control_setup()
+{
+    //Add grid to parent container
+    b_2_2_1.add(p_grid_3_5);
+
+    //Populate grid
+    for(int j=0;j<6;j++)
+    {
+        if (j<2)
+        {
+            p_grid_3_5.insert_row(j);
+            p_grid_3_5.insert_column(j);
+        }
+        else
+        {
+            p_grid_3_5.insert_column(j);
+        }
+    }
+
+    //Style Provider Construction (need to make Labels in a special way)
+    //Open label
+    Gtk::Label *lab_3_5_2 = new Gtk::Label("Open");
+    Glib::RefPtr<Gtk::CssProvider> css_provider = Gtk::CssProvider::create();
+    css_provider->load_from_data("label {background-image: image(lime);}");
+    lab_3_5_2->get_style_context()->add_provider(
+    css_provider, GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    Gtk::Label *lab_3_5_3 = new Gtk::Label("Closed");
+    Glib::RefPtr<Gtk::CssProvider> css_provider2 = Gtk::CssProvider::create();
+    css_provider2->load_from_data("label {background-image: image(red);}");
+    lab_3_5_3->get_style_context()->add_provider(
+    css_provider2, GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    ///Row 0
+    p_grid_3_5.attach(but_3_5_1,0,0);
+    p_grid_3_5.attach(lab_3_5_1,1,0,5,1);
+
+    //Labels & Styling
+    lab_3_5_1.set_label("Status");
+    lab_3_5_1.set_hexpand(true);
+    but_3_5_1.set_label("Open");
+    but_3_5_1.set_label("Open");
+
+    ///Row 1
+    p_grid_3_5.attach(but_3_5_2,0,1);
+    p_grid_3_5.attach(lab_5_pad_1,1,1);
+    p_grid_3_5.attach(*lab_3_5_2,2,1);
+    p_grid_3_5.attach(lab_5_pad_2,3,1);
+    p_grid_3_5.attach(*lab_3_5_3,4,1);
+    p_grid_3_5.attach(lab_5_pad_3,5,1);
+//    p_grid_3_5.attach(lab_3_5_2,1,1);
+//    p_grid_3_5.attach(lab_3_5_3,2,1);
+
+    //Labels & Styling
+    int padding_width=70;
+    int padding_height=10;
+    but_3_5_2.set_label("Close");
+    lab_3_5_2->set_hexpand(true);
+    lab_3_5_3->set_hexpand(true);
+    lab_5_pad_1.set_size_request(padding_width,padding_height);
+    lab_5_pad_2.set_size_request(padding_width,padding_height);
+    lab_5_pad_3.set_size_request(padding_width,padding_height);
+    //lab_3_5_2.set_label("Open");
+    //lab_3_5_3.set_label("Closed");
+
+
+}
+
 ///End of Architecture Functions
 
 ///Function to define button signals
 void MWindow::button_signals()
 {
     but_3_4_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_qbutton_clicked));
+    but_3_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_save_button_clicked));
 }
 
 ///Function to define button responses
 void MWindow::on_qbutton_clicked()
 {
     hide();
+}
+
+void MWindow::on_save_button_clicked()
+{
+    //Open settings file
+    const char *f_name = "saved_settings.txt";
+    FILE *fh;
+
+    FL_settings user_settings;
+    //Process: get from buffer, retrieve ustring, retrieve as const char *, convert to float
+    user_settings.name = ent_3_4_1.get_buffer()->get_text();
+    user_settings.abs_x = (float )atof((ent_4_1_1.get_buffer()->get_text()).data());
+    user_settings.abs_y = (float )atof((ent_4_1_2.get_buffer()->get_text()).data());
+    user_settings.origin[0] = 0;
+    user_settings.origin[1] = 0; //need to figure out how to change these later??
+    user_settings.shutter_status = 1; //need to configure (either 1 or 0)
+
+    fh = fopen(f_name,"a");
+    if (fh==NULL)
+    {
+        //Could not open file
+        //Need to put some sort of indicator here (pop-up window)
+        exit(1);
+    }
+    fprintf(fh,"%s\n%f\n%f\n%f\t%f\n%d\n\n",
+                    (user_settings.name).c_str(),
+                    user_settings.abs_x,
+                    user_settings.abs_y,
+                    user_settings.origin[0],
+                    user_settings.origin[1],
+                    user_settings.shutter_status);
+    fclose(fh);
+
 }
 
