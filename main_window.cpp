@@ -93,9 +93,11 @@ void MWindow::stage_position_setup()
     p_grid_3_1.attach(lab_4_1_2,0,1);
     p_grid_3_1.attach(ent_4_1_3,1,1);
     p_grid_3_1.attach(ent_4_1_4,2,1);
+    p_grid_3_1.attach(but_4_1_5,4,1);
 
     //Labels & Styling
     lab_4_1_2.set_label("Relative Position");
+    but_4_1_5.set_label("Display Origin");
 
     ///Row 2
     p_grid_3_1.attach(but_4_1_1,0,2);
@@ -472,6 +474,9 @@ void MWindow::button_signals()
     but_3_5_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_close_button_clicked));
     but_3_4_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_load_button_clicked));
     but_4_1_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_set_origin_button_clicked));
+    but_4_1_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_go_to_button_clicked));
+    but_4_1_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_display_origin_button_clicked));
+    but_5_1_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m1_button_clicked));
 }
 
 ///Function to define quit button response
@@ -676,6 +681,52 @@ void MWindow::on_set_origin_button_clicked()
     stored_origin.origin_y = atof(((ent_4_1_2.get_buffer()->get_text()).data()));
     on_set_origin_success();
 }
+
+///Function to define Go To Position button response
+void MWindow::on_go_to_button_clicked()
+{
+    //Only changes labels for now - will eventually need to connect with backend
+    const char *current_x = (ent_4_1_5.get_buffer()->get_text()).data();
+    const char *current_y = (ent_4_1_6.get_buffer()->get_text()).data();
+
+    ent_4_1_1.get_buffer()->set_text(current_x);
+    ent_4_1_2.get_buffer()->set_text(current_y);
+
+    ent_4_1_5.get_buffer()->set_text("");
+    ent_4_1_6.get_buffer()->set_text("");
+}
+
+///Function to define Display Origin button response
+void MWindow::on_display_origin_button_clicked()
+{
+    std::string msg;
+    string x_pos = to_string(stored_origin.origin_x);
+    string y_pos = to_string(stored_origin.origin_y);
+    msg = "Current Origin:("+x_pos+","+y_pos+")";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+}
+
+///Function to define M1+ Save button response
+void MWindow::on_m1_button_clicked()
+{
+    try
+    {
+        m1.abs_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
+        m2.abs_x = atof((ent_4_1_2.get_buffer()->get_text()).data());
+        m3.abs_x = atof((ent_4_1_3.get_buffer()->get_text()).data());
+        m4.abs_x = atof((ent_4_1_4.get_buffer()->get_text()).data());
+    }
+    catch(...)
+    {
+        on_general_error();
+    }
+    on_pos_stored_successfully();
+
+}
+
 ///END OF BUTTON RESPONSE FXNS
 
 ///DIALOG FXNS
@@ -738,6 +789,26 @@ void MWindow::on_set_origin_success()
     string x_pos = to_string(stored_origin.origin_x);
     string y_pos = to_string(stored_origin.origin_y);
     msg = "Origin set successfully!\nO:("+x_pos+","+y_pos+")";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+}
+
+///Function to display success dialog for storing position
+void MWindow::on_pos_stored_successfully()
+{
+    string msg = "Position stored successfully";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+}
+
+///Function for undefined error
+void MWindow::on_general_error()
+{
+    string msg = "Error Occurred";
     Gtk::MessageDialog dialog(*this,
     msg.c_str(),
     false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);

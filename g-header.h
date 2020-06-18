@@ -26,7 +26,7 @@ protected:
     Gtk::Grid p_grid_3_1;
     Gtk::Label lab_4_1_1,lab_4_1_2,lab_4_1_3,lab_4_1_4,lab_4_pad_1;
     Gtk::Entry ent_4_1_1,ent_4_1_2,ent_4_1_3,ent_4_1_4,ent_4_1_5,ent_4_1_6;
-    Gtk::Button but_4_1_1,but_4_1_2,but_4_1_3,but_4_1_4;
+    Gtk::Button but_4_1_1,but_4_1_2,but_4_1_3,but_4_1_4,but_4_1_5;
     Gtk::Button but_5_1_1,but_5_1_2,but_5_2_1,but_5_2_2;
     Gtk::Button but_5_3_1,but_5_3_2,but_5_4_1,but_5_4_2;
     Gtk::Box b_4_1_1,b_4_1_2,b_4_1_3,b_4_1_4;
@@ -70,7 +70,19 @@ protected:
         float origin_y;
     }FL_origin;
 
+    typedef struct position
+    {
+        float abs_x;
+        float abs_y;
+        float rel_x;
+        float rel_y;
+    }FL_position;
+
     FL_origin stored_origin;
+    FL_position m1;
+    FL_position m2;
+    FL_position m3;
+    FL_position m4;
 
     //Member functions
     void init_architecture();
@@ -86,12 +98,17 @@ protected:
     void on_close_button_clicked();
     void on_load_button_clicked();
     void on_set_origin_button_clicked();
+    void on_go_to_button_clicked();
+    void on_display_origin_button_clicked();
+    void on_m1_button_clicked();
+    void on_pos_stored_successfully();
     int on_save_error();
     void on_save_success();
     void on_no_name();
     void on_load_error();
     void on_load_success();
     void on_set_origin_success();
+    void on_general_error();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 
