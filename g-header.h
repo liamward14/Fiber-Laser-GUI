@@ -71,9 +71,11 @@ protected:
     void on_save_button_clicked();
     void on_open_button_clicked();
     void on_close_button_clicked();
+    void on_load_button_clicked();
     int on_save_error();
     void on_save_success();
-    int on_no_name();
+    void on_no_name();
+    void on_load_error();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

@@ -22,7 +22,7 @@ MWindow::~MWindow()
 {
 }
 
-///Architecture Functions
+///ARCHITECTURE FXNS
 ///Function to setup the base architecture
 void MWindow::init_architecture()
 {
@@ -457,9 +457,9 @@ void MWindow::shutter_control_setup()
 
 
 }
+///END OF ARCHITECTURE FXNS
 
-///End of Architecture Functions
-
+///BUTTON RESPONSE FXNS
 ///Function to define button signals
 void MWindow::button_signals()
 {
@@ -467,6 +467,7 @@ void MWindow::button_signals()
     but_3_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_save_button_clicked));
     but_3_5_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_open_button_clicked));
     but_3_5_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_close_button_clicked));
+    but_3_4_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_load_button_clicked));
 }
 
 ///Function to define quit button response
@@ -480,15 +481,18 @@ void MWindow::on_save_button_clicked()
 {
 
     //Open settings file
-    const char *f_name = "saved_settings.txt";
+    Glib::ustring name = ent_3_4_1.get_buffer()->get_text();
+    Glib::ustring f_path = "user-saved-params\\";
+    Glib::ustring f_end = ".txt";
+    Glib::ustring f_name = f_path+name+f_end;//saved_settings.txt";
     FILE *fh;
 
     FL_settings user_settings;
     //Process: get from buffer, retrieve ustring, retrieve as const char *, convert to float
-    Glib::ustring name = ent_3_4_1.get_buffer()->get_text();
+    //Glib::ustring name = ent_3_4_1.get_buffer()->get_text();
     if (name[0]=='\0')
     {
-        int result = on_no_name();
+        on_no_name();
         return;
     }
     user_settings.name = name;
@@ -507,7 +511,7 @@ void MWindow::on_save_button_clicked()
     }
     user_settings.shutter_status = shutter_status; //need to configure (either 1 or 0)
 
-    fh = fopen(f_name,"a");
+    fh = fopen(f_name.data(),"a");
     if (fh==NULL)
     {
         //Could not open file
@@ -533,6 +537,25 @@ void MWindow::on_save_button_clicked()
 
     //Saved successfully
     on_save_success();
+}
+
+///Function to define 'load' button response
+void MWindow::on_load_button_clicked()
+{
+    FILE *fh;
+    Glib::ustring f_path = "user-saved-params\\";
+    Glib::ustring f_end = ".txt";
+    Glib::ustring f_name = f_path+(ent_3_4_2.get_buffer()->get_text())+f_end;
+
+    fh = fopen(f_name.data(),"r");
+    if(fh==NULL)
+    {
+        //could not open file
+        on_load_error();
+        return;
+    }
+
+
 }
 
 ///Function to define 'open' shutter button response
@@ -563,7 +586,9 @@ void MWindow::on_close_button_clicked()
     css_provider_open->load_from_data("label {background-image: image(transparent);}");
     open = false; //set open indiciator to false
 }
+///END OF BUTTON RESPONSE FXNS
 
+///DIALOG FXNS
 ///Function to define error message for saving settings
 int MWindow::on_save_error()
 {
@@ -575,13 +600,12 @@ int MWindow::on_save_error()
 }
 
 ///Function to prompt user for saved settings name
-int MWindow::on_no_name()
+void MWindow::on_no_name()
 {
     Gtk::MessageDialog dialog(*this,
     "Please enter a name to save the settings under.",
     false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
-    int result = dialog.run();
-    return result;
+    dialog.run();
 }
 
 ///Function to display success dialog for saving settings
@@ -593,6 +617,20 @@ void MWindow::on_save_success()
     dialog.run();
     ent_3_4_1.get_buffer()->set_text("");
 }
+
+///Function to display failure dialog for loading settings
+void MWindow::on_load_error()
+{
+    Glib::ustring f_end = ".txt";
+    Glib::ustring f_name = (ent_3_4_2.get_buffer()->get_text())+f_end;
+    Glib::ustring msg = "Error loading file: "+f_name+"\n"+"Please make sure the file exists and is not corrupted";
+    Gtk::MessageDialog dialog(*this,
+    msg.data(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+    ent_3_4_2.get_buffer()->set_text("");
+}
+///END OF DIALOG FXNS
 //Other stuff (including global vars needed) are defined below:
 //static int counter=0;
 
