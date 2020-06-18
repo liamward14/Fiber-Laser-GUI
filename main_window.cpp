@@ -477,6 +477,7 @@ void MWindow::button_signals()
     but_4_1_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_go_to_button_clicked));
     but_4_1_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_display_origin_button_clicked));
     but_5_1_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m1_button_clicked));
+    but_5_3_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m1r_button_clicked));
 }
 
 ///Function to define quit button response
@@ -725,6 +726,16 @@ void MWindow::on_m1_button_clicked()
     }
     on_pos_stored_successfully();
 
+}
+
+///Function to define M1 R recall button response
+void MWindow::on_m1r_button_clicked()
+{
+    //Need to connect to backend still
+    ent_4_1_1.get_buffer()->set_text(to_string(m1.abs_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(m1.abs_y));
+    ent_4_1_3.get_buffer()->set_text(to_string(m1.rel_x));
+    ent_4_1_4.get_buffer()->set_text(to_string(m1.rel_y));
 }
 
 ///END OF BUTTON RESPONSE FXNS

@@ -101,6 +101,7 @@ protected:
     void on_go_to_button_clicked();
     void on_display_origin_button_clicked();
     void on_m1_button_clicked();
+    void on_m1r_button_clicked();
     void on_pos_stored_successfully();
     int on_save_error();
     void on_save_success();
