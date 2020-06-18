@@ -1,6 +1,9 @@
 #include <gtkmm-3.0/gtkmm.h>
 #include <cstdio>
 #include <iostream>
+#include <fstream>
+#include <boost/algorithm/string.hpp>
+using namespace std;
 
 ///Class definitions
 //Define Main Window class
@@ -76,6 +79,7 @@ protected:
     void on_save_success();
     void on_no_name();
     void on_load_error();
+    void on_load_success();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

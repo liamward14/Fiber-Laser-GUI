@@ -511,7 +511,7 @@ void MWindow::on_save_button_clicked()
     }
     user_settings.shutter_status = shutter_status; //need to configure (either 1 or 0)
 
-    fh = fopen(f_name.data(),"a");
+    fh = fopen(f_name.data(),"w");
     if (fh==NULL)
     {
         //Could not open file
@@ -526,7 +526,7 @@ void MWindow::on_save_button_clicked()
         }
 
     }
-    fprintf(fh,"Name:%s,\nx:%f,\ny:%f,\norigin:(%f,%f),\nshutter:%d\n\n",
+    fprintf(fh,"Name:%s,\nx:%f,\ny:%f,\noriginx:%f,\noriginy:%f,\nshutter:%d\n\n",
                     (user_settings.name).c_str(),
                     user_settings.abs_x,
                     user_settings.abs_y,
@@ -542,20 +542,98 @@ void MWindow::on_save_button_clicked()
 ///Function to define 'load' button response
 void MWindow::on_load_button_clicked()
 {
-    FILE *fh;
     Glib::ustring f_path = "user-saved-params\\";
     Glib::ustring f_end = ".txt";
     Glib::ustring f_name = f_path+(ent_3_4_2.get_buffer()->get_text())+f_end;
+    FL_settings load_settings; //define structure member to hold parsed loaded data
+    std::string labels[5] = {"Name","x","y","origin","shutter"};
+    int j=0; //keeping track of loaded members
+    //Init structure members
+    string name;
+    float xf,yf,o_xf,o_yf,shutterf;
 
-    fh = fopen(f_name.data(),"r");
-    if(fh==NULL)
+    //Use C++ method of reading files b/c it makes parsing data easier
+    std::string line;
+    std::ifstream fh (f_name.data());
+    if (fh.is_open())
     {
-        //could not open file
+        while (std::getline(fh,line,','))
+        {
+            //std::cout << line << std::endl;
+            switch(j)
+            {
+            case 0:{ //Reading 'Name'
+                name = line.string::substr(5,string::npos);
+                //std::cout << name << std::endl;
+                break;
+                }
+            case 1:{//Reading 'x'
+                std::string x = line.string::substr(3,string::npos);
+                //std::cout << x << std::endl;
+                //printf("Line: %s\t",line);
+                //printf("Abs x string: %s\n",x);
+                xf = (float )atof(x.c_str()); //convert to float
+                break;
+                }
+            case 2:{ //Reading 'y'
+                std::string y = line.string::substr(3,string::npos);
+                //std::cout << y << std::endl;
+                //printf("Line: %s\t",line);
+                //printf("Abs y string: %s\n",y);
+                yf = atof(y.c_str());
+                }
+            case 3:{//Reading 'originx'
+                std::string o_x = line.string::substr(9,string::npos);
+                //std::cout << o_x << std::endl;
+                o_xf = atof(o_x.c_str());
+                break;
+                }
+            case 4:{
+                std::string o_y = line.string::substr(9,string::npos);
+                //std::cout << o_y << std::endl;
+                o_yf = atof(o_y.c_str());
+                break;
+                }
+            case 5:{ //Reading 'shutter'
+                std::string shutter = line.string::substr(9,string::npos);
+                //std::cout << shutter << std::endl;
+                shutterf = atof(shutter.c_str());
+                break;
+                }
+            }
+            j++;
+        }
+        load_settings.abs_x = xf;
+        load_settings.abs_y = yf;
+        //printf("Absolute x: %f\n",xf);
+        //printf("Absolute y: %f\n",yf);
+        load_settings.name = name;
+        load_settings.origin[0] = o_xf;
+        load_settings.origin[1] = o_yf;
+        load_settings.shutter_status = shutterf;
+        fh.close();
+        on_load_success(); //display dialog if file loaded correctly
+    }
+    else
+    {
+        //Could not open file
         on_load_error();
         return;
     }
 
+    //Write loaded settings to appropriate buffers (will need to connect this to backend eventually)
+    ent_4_1_1.get_buffer()->set_text(to_string(load_settings.abs_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(load_settings.abs_y));
 
+    //Simulate open / close click based on loaded settings
+    if (load_settings.shutter_status)
+    {
+        on_open_button_clicked();
+    }
+    else
+    {
+        on_close_button_clicked();
+    }
 }
 
 ///Function to define 'open' shutter button response
@@ -626,6 +704,16 @@ void MWindow::on_load_error()
     Glib::ustring msg = "Error loading file: "+f_name+"\n"+"Please make sure the file exists and is not corrupted";
     Gtk::MessageDialog dialog(*this,
     msg.data(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+    ent_3_4_2.get_buffer()->set_text("");
+}
+
+///Function to display success dialog for loading settings
+void MWindow::on_load_success()
+{
+    Gtk::MessageDialog dialog(*this,
+    "Settings loaded successfully!",
     false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
     dialog.run();
     ent_3_4_2.get_buffer()->set_text("");
