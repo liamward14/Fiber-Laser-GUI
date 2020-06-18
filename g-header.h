@@ -102,6 +102,8 @@ protected:
     void on_display_origin_button_clicked();
     void on_m1_button_clicked();
     void on_m1r_button_clicked();
+    void on_m2_button_clicked();
+    void on_m2r_button_clicked();
     void on_pos_stored_successfully();
     int on_save_error();
     void on_save_success();
@@ -110,6 +112,7 @@ protected:
     void on_load_success();
     void on_set_origin_success();
     void on_general_error();
+    void on_internal_load_success();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

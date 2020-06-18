@@ -12,6 +12,8 @@ void MWindow::button_signals()
     but_4_1_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_display_origin_button_clicked));
     but_5_1_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m1_button_clicked));
     but_5_3_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m1r_button_clicked));
+    but_5_1_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m2_button_clicked));
+    but_5_3_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m2r_button_clicked));
 }
 
 ///Function to define quit button response
@@ -250,9 +252,9 @@ void MWindow::on_m1_button_clicked()
     try
     {
         m1.abs_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
-        m2.abs_x = atof((ent_4_1_2.get_buffer()->get_text()).data());
-        m3.abs_x = atof((ent_4_1_3.get_buffer()->get_text()).data());
-        m4.abs_x = atof((ent_4_1_4.get_buffer()->get_text()).data());
+        m1.abs_y = atof((ent_4_1_2.get_buffer()->get_text()).data());
+        m1.rel_x = atof((ent_4_1_3.get_buffer()->get_text()).data());
+        m1.rel_y = atof((ent_4_1_4.get_buffer()->get_text()).data());
     }
     catch(...)
     {
@@ -270,6 +272,36 @@ void MWindow::on_m1r_button_clicked()
     ent_4_1_2.get_buffer()->set_text(to_string(m1.abs_y));
     ent_4_1_3.get_buffer()->set_text(to_string(m1.rel_x));
     ent_4_1_4.get_buffer()->set_text(to_string(m1.rel_y));
+    on_internal_load_success();
+}
+
+///Function to define M2+ Save button response
+void MWindow::on_m2_button_clicked()
+{
+    try
+    {
+        m2.abs_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
+        m2.abs_y = atof((ent_4_1_2.get_buffer()->get_text()).data());
+        m2.rel_x = atof((ent_4_1_3.get_buffer()->get_text()).data());
+        m2.rel_y = atof((ent_4_1_4.get_buffer()->get_text()).data());
+    }
+    catch(...)
+    {
+        on_general_error();
+    }
+    on_pos_stored_successfully();
+
+}
+
+///Function to define M2 R recall button response
+void MWindow::on_m2r_button_clicked()
+{
+    //Need to connect to backend still
+    ent_4_1_1.get_buffer()->set_text(to_string(m2.abs_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(m2.abs_y));
+    ent_4_1_3.get_buffer()->set_text(to_string(m2.rel_x));
+    ent_4_1_4.get_buffer()->set_text(to_string(m2.rel_y));
+    on_internal_load_success();
 }
 
 ///END OF BUTTON RESPONSE FXNS

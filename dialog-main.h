@@ -83,4 +83,14 @@ void MWindow::on_general_error()
     false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
     dialog.run();
 }
+
+///Function to display success for loading saved settings correctly
+void MWindow::on_internal_load_success()
+{
+    string msg = "Position loaded successfully";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+}
 ///END OF DIALOG FXNS
