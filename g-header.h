@@ -62,6 +62,16 @@ protected:
     Gtk::Label *lab_3_5_3 = new Gtk::Label("Closed"); //Close label
     Glib::RefPtr<Gtk::CssProvider> css_provider_close = Gtk::CssProvider::create();
 
+    ///Data storage
+    //Structure type def to hold origin data
+    typedef struct origin
+    {
+        float origin_x;
+        float origin_y;
+    }FL_origin;
+
+    FL_origin stored_origin;
+
     //Member functions
     void init_architecture();
     void stage_position_setup();
@@ -75,11 +85,13 @@ protected:
     void on_open_button_clicked();
     void on_close_button_clicked();
     void on_load_button_clicked();
+    void on_set_origin_button_clicked();
     int on_save_error();
     void on_save_success();
     void on_no_name();
     void on_load_error();
     void on_load_success();
+    void on_set_origin_success();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

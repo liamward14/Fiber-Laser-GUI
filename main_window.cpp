@@ -142,6 +142,9 @@ void MWindow::stage_position_setup()
     but_5_4_2.set_label("M4 R");
     but_4_1_3.set_label("Relative Origin");
 
+    //Default:
+    stored_origin.origin_x = 0;
+    stored_origin.origin_y = 0;
 }
 
 ///Function to setup 'X-Axis' box
@@ -468,6 +471,7 @@ void MWindow::button_signals()
     but_3_5_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_open_button_clicked));
     but_3_5_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_close_button_clicked));
     but_3_4_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_load_button_clicked));
+    but_4_1_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_set_origin_button_clicked));
 }
 
 ///Function to define quit button response
@@ -664,6 +668,14 @@ void MWindow::on_close_button_clicked()
     css_provider_open->load_from_data("label {background-image: image(transparent);}");
     open = false; //set open indiciator to false
 }
+
+///Function to define button response for Set Origin button
+void MWindow::on_set_origin_button_clicked()
+{
+    stored_origin.origin_x = atof(((ent_4_1_1.get_buffer()->get_text()).data()));
+    stored_origin.origin_y = atof(((ent_4_1_2.get_buffer()->get_text()).data()));
+    on_set_origin_success();
+}
 ///END OF BUTTON RESPONSE FXNS
 
 ///DIALOG FXNS
@@ -717,6 +729,19 @@ void MWindow::on_load_success()
     false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
     dialog.run();
     ent_3_4_2.get_buffer()->set_text("");
+}
+
+///Function to display success dialog for storing origin
+void MWindow::on_set_origin_success()
+{
+    std::string msg;
+    string x_pos = to_string(stored_origin.origin_x);
+    string y_pos = to_string(stored_origin.origin_y);
+    msg = "Origin set successfully!\nO:("+x_pos+","+y_pos+")";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
 }
 ///END OF DIALOG FXNS
 //Other stuff (including global vars needed) are defined below:
