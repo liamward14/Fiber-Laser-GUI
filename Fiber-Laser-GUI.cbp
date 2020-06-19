@@ -36,6 +36,9 @@
 		<Linker>
 			<Add option="`pkg-config gtkmm-3.0 --libs`" />
 		</Linker>
+		<Unit filename="architecture-main.h" />
+		<Unit filename="buttons-main.h" />
+		<Unit filename="dialog-main.h" />
 		<Unit filename="g-header.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main_window.cpp" />

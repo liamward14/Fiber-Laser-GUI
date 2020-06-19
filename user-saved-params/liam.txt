@@ -1,0 +1,7 @@
+Name:liam,
+x:5.000000,
+y:4.000000,
+originx:0.000000,
+originy:0.000000,
+shutter:0
+

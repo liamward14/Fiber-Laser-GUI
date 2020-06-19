@@ -1,0 +1,7 @@
+Name:f,
+x:0.000000,
+y:0.000000,
+originx:0.000000,
+originy:0.000000,
+shutter:0
+
