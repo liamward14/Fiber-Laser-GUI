@@ -2,6 +2,8 @@
 #include <cstdio>
 #include <iostream>
 #include <fstream>
+#include <cmath>
+#include <typeinfo>
 #include <boost/algorithm/string.hpp>
 using namespace std;
 
@@ -111,6 +113,7 @@ protected:
     void on_m3r_button_clicked();
     void on_m4_button_clicked();
     void on_m4r_button_clicked();
+    void on_abs_pos_change();
     void on_pos_stored_successfully();
     int on_save_error();
     void on_save_success();
@@ -122,6 +125,7 @@ protected:
     void on_internal_load_success();
     void on_send_success();
     int on_quit_request();
+    void on_range_violated();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

@@ -1,3 +1,4 @@
+
 ///BUTTON RESPONSE FXNS
 ///Function to define button signals
 void MWindow::button_signals()
@@ -96,7 +97,8 @@ void MWindow::on_save_button_clicked()
         case(Gtk::RESPONSE_OK):
             return;
         default:
-            std::cout<<"Unexpected click"<<std::endl;
+            on_general_error();
+            //std::cout<<"Unexpected click"<<std::endl;
             break;
         }
 
@@ -243,8 +245,36 @@ void MWindow::on_close_button_clicked()
 ///Function to define button response for Set Origin button
 void MWindow::on_set_origin_button_clicked()
 {
-    stored_origin.origin_x = atof(((ent_4_1_1.get_buffer()->get_text()).data()));
-    stored_origin.origin_y = atof(((ent_4_1_2.get_buffer()->get_text()).data()));
+    float ox = atof(((ent_4_1_1.get_buffer()->get_text()).data()));
+    float oy = atof(((ent_4_1_2.get_buffer()->get_text()).data()));
+    if(abs(ox)>25||abs(oy)>25)
+    {
+        //Display message dialog
+        on_range_violated();
+
+        //Set to max params for x
+        if(ox<-25)
+        {
+            ent_4_1_1.get_buffer()->set_text("-25");
+        }
+        else if (ox>25)
+        {
+            ent_4_1_1.get_buffer()->set_text("25");
+        }
+
+        //Set to max params for y
+        if(oy<-25)
+        {
+            ent_4_1_2.get_buffer()->set_text("-25");
+        }
+        else if (oy>25)
+        {
+            ent_4_1_2.get_buffer()->set_text("25");
+        }
+        return;
+    }
+    stored_origin.origin_x = ox;
+    stored_origin.origin_y = oy;
     on_set_origin_success();
 }
 
@@ -252,14 +282,16 @@ void MWindow::on_set_origin_button_clicked()
 void MWindow::on_go_to_button_clicked()
 {
     //Only changes labels for now - will eventually need to connect with backend
-    const char *current_x = (ent_4_1_5.get_buffer()->get_text()).data();
-    const char *current_y = (ent_4_1_6.get_buffer()->get_text()).data();
+    float current_x = atof((ent_4_1_5.get_buffer()->get_text()).data());
+    float current_y = atof((ent_4_1_6.get_buffer()->get_text()).data());
 
-    ent_4_1_1.get_buffer()->set_text(current_x);
-    ent_4_1_2.get_buffer()->set_text(current_y);
+    ent_4_1_1.get_buffer()->set_text(to_string(current_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(current_y));
 
     ent_4_1_5.get_buffer()->set_text("0.00000");
     ent_4_1_6.get_buffer()->set_text("0.00000");
+
+    on_abs_pos_change();
 }
 
 ///Function to define Display Origin button response

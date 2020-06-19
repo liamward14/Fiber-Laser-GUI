@@ -116,4 +116,14 @@ int MWindow::on_quit_request()
     return result;
 }
 
+///Function to display message indiciating position / origin range error
+void MWindow::on_range_violated()
+{
+    string msg = "Requested position outside of the working range of the device\nThe position will be set to the limits of the system.\nPlease select 'OK' and try again";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK_CANCEL);
+    dialog.run();
+}
+
 ///END OF DIALOG FXNS

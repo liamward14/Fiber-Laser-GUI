@@ -2,6 +2,7 @@
 #include "dialog-main.h"
 #include "buttons-main.h"
 #include "architecture-main.h"
+#include "actions-main.h"
 
 //This file will define constructor & destructor of the MWindow class
 

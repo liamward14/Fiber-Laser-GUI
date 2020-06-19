@@ -90,6 +90,8 @@ void MWindow::stage_position_setup()
     but_4_1_2.set_label("Set Origin");
     ent_4_1_1.get_buffer()->set_text("0.00000"); //default
     ent_4_1_2.get_buffer()->set_text("0.00000"); //default
+    ent_4_1_1.set_editable(false);
+    ent_4_1_2.set_editable(false);
 
     ///Row 1
     p_grid_3_1.attach(lab_4_1_2,0,1);
