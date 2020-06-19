@@ -14,12 +14,30 @@ void MWindow::button_signals()
     but_5_3_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m1r_button_clicked));
     but_5_1_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m2_button_clicked));
     but_5_3_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m2r_button_clicked));
+    but_3_4_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_send_button_clicked));
+    but_3_4_6.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_clear_button_clicked));
 }
 
 ///Function to define quit button response
 void MWindow::on_qbutton_clicked()
 {
     hide();
+}
+
+///Function to define Send button response
+void MWindow::on_send_button_clicked()
+{
+    //Need to send info via serial communication
+    //There will be a placeholder here for now
+    std::cout << "Send clicked" << std::endl;
+    on_send_success(); //display dialog
+}
+
+///Function to define Clear button response
+void MWindow::on_clear_button_clicked()
+{
+    //Clear the textview buffer that sends commands
+    tv_3_4_1.get_buffer()->set_text("");
 }
 
 ///Function to define save button response

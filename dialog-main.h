@@ -93,4 +93,16 @@ void MWindow::on_internal_load_success()
     false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
     dialog.run();
 }
+
+///Function to display send success for serial comms
+void MWindow::on_send_success()
+{
+    string command = (tv_3_4_1.get_buffer()->get_text()).data();
+    string msg = "Serial Command '"+command+"' sent successfully!";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK);
+    dialog.run();
+}
+
 ///END OF DIALOG FXNS

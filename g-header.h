@@ -51,7 +51,7 @@ protected:
     Gtk::TextView tv_3_4_1;
     Gtk::ComboBoxText cbt_3_4_1;
     Gtk::Entry ent_3_4_1,ent_3_4_2;
-    Gtk::Button but_3_4_1,but_3_4_2,but_3_4_3,but_3_4_4;
+    Gtk::Button but_3_4_1,but_3_4_2,but_3_4_3,but_3_4_4,but_3_4_5,but_3_4_6;
 
     ///shutter_control_setup members
     Gtk::Grid p_grid_3_5;
@@ -93,6 +93,8 @@ protected:
     void shutter_control_setup();
     void button_signals();
     void on_qbutton_clicked();
+    void on_send_button_clicked();
+    void on_clear_button_clicked();
     void on_save_button_clicked();
     void on_open_button_clicked();
     void on_close_button_clicked();
@@ -113,30 +115,15 @@ protected:
     void on_set_origin_success();
     void on_general_error();
     void on_internal_load_success();
+    void on_send_success();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 
+    ///Global Styling & Fonts
+    Gdk::RGBA colour = Gdk::RGBA(Glib::ustring("rgb(19,206,13)"));
+    Pango::FontDescription f = Pango::FontDescription(Glib::ustring("Sans Bold 10"));
+    Pango::FontDescription f2 = Pango::FontDescription(Glib::ustring("Sans 9"));
 };
-
-
-/*
-//Class for dialog window corresponding to File IO error
-class FIO_Dialog : public Gtk::Window
-{
-public:
-    FIO_Dialog(); //constrcutor
-    ~FIO_Dialog(); //destructor
-
-protected:
-    ///Gtk Widget members
-    Gtk::ButtonBox p_box;
-    Gtk::Button but_1; //confirm button
-    Gtk::Button but_2; //question button
-
-    ///Member functions
-    void on_confirm_button_clicked();
-    void on_question_button_clicked();
-};*/
 
 ///Other important definitions
 //Structure type def to hold settings data

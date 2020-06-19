@@ -38,13 +38,23 @@ void MWindow::init_architecture()
     f_1_1_3.set_label("X-Axis");
     f_1_1_5.set_label("Y-Axis");
     f_1_1_4.set_label("Predefined Functions");
+    f_1_1_1.override_font(f);
+    f_1_1_2.override_font(f);
+    f_1_1_3.override_font(f);
+    f_1_1_5.override_font(f);
+    f_1_1_4.override_font(f);
 
 }
 
 ///Function to setup stage position box
 void MWindow::stage_position_setup()
 {
+    //Add grid to parent container
     b_2_1_1.add(p_grid_3_1);
+
+    //Styling options
+    p_grid_3_1.override_font(f2);
+
 
     //Populate grid
     for (int j=0;j<5;j++)
@@ -131,6 +141,10 @@ void MWindow::x_axis_setup()
     //Add grid to parent container
     b_2_3_1.add(p_grid_3_2);
 
+    //Styling options
+    p_grid_3_2.override_font(f2);
+
+
     //Populate grid
     for(int j=0;j<5;j++)
     {
@@ -212,6 +226,9 @@ void MWindow::y_axis_setup()
 {
     //Add grid to parent container
     b_2_5_1.add(p_grid_3_3);
+
+    //Styling options
+    p_grid_3_3.override_font(f2);
 
     //Populate grid
     for(int j=0;j<5;j++)
@@ -295,6 +312,9 @@ void MWindow::predefined_fxns_setup()
     //Add grid to parent container
     b_2_4_1.add(p_grid_3_4);
 
+    //Styling options
+    p_grid_3_4.override_font(f2);
+
     //Populate grid
     for(int j=0;j<10;j++)
     {
@@ -314,11 +334,23 @@ void MWindow::predefined_fxns_setup()
     p_grid_3_4.attach(but_3_4_1,2,0);
 
     //Labels & Styling
-    lab_3_4_1.set_label("Predefined Functions");
+    lab_3_4_1.set_label("Send Direct Command:");
     but_3_4_1.set_label("Quit");
 
-    ///Row 1/2/3
-    p_grid_3_4.attach(tv_3_4_1,0,1,3,3);
+    ///Row 1
+    p_grid_3_4.attach(tv_3_4_1,0,1,2,3);
+
+    ///Row 2
+    p_grid_3_4.attach(but_3_4_5,2,2);
+
+    //Labels & Styling
+    but_3_4_5.set_label("Send");
+
+    ///Row 3
+    p_grid_3_4.attach(but_3_4_6,2,3);
+
+    //Labels & Styling
+    but_3_4_6.set_label("Clear");
 
     //Labels & Styling
     tv_3_4_1.set_size_request(20,100);
@@ -372,6 +404,9 @@ void MWindow::shutter_control_setup()
 {
     //Add grid to parent container
     b_2_2_1.add(p_grid_3_5);
+
+    //Styling options
+    p_grid_3_5.override_font(f2);
 
     //Populate grid
     for(int j=0;j<6;j++)
