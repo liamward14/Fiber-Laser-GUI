@@ -126,6 +126,7 @@ protected:
     void on_send_success();
     int on_quit_request();
     void on_range_violated();
+    void on_joystick_off_button_clicked();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

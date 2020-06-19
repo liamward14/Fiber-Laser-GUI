@@ -21,6 +21,7 @@ void MWindow::button_signals()
     but_5_4_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m3r_button_clicked));
     but_5_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4_button_clicked));
     but_5_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4r_button_clicked));
+    but_4_1_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_joystick_off_button_clicked));
 }
 
 ///Function to define quit button response

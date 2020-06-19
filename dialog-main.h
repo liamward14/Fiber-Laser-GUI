@@ -126,4 +126,24 @@ void MWindow::on_range_violated()
     dialog.run();
 }
 
+///Function to display message for joystick status
+void MWindow::on_joystick_off_button_clicked()
+{
+    string msg;
+    if ((but_4_1_4.get_label())=="Joystick Off")
+    {
+        msg = "Joystick has been turned off";
+        but_4_1_4.set_label("Joystick On");
+    }
+    else if ((but_4_1_4.get_label())=="Joystick On")
+    {
+        msg = "Joystick has been turned on";
+        but_4_1_4.set_label("Joystick Off");
+    }
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK_CANCEL);
+    dialog.run();
+}
+
 ///END OF DIALOG FXNS
