@@ -20,7 +20,7 @@ protected:
     Gtk::Grid p_grid;
     Gtk::Frame f_1_1_1,f_1_1_2,f_1_1_3,f_1_1_4,f_1_1_5;
     //Top-level Boxes
-    Gtk::Box b_2_1_1,b_2_2_1,b_2_3_1,b_2_4_1,b_2_5_1;
+    Gtk::Box b_2_1_1,b_2_2_1,b_2_3_1,b_2_4_1,b_2_5_1,b_2_6_1;
 
     ///Stage Position Members
     Gtk::Grid p_grid_3_1;
@@ -85,6 +85,7 @@ protected:
     FL_position m4;
 
     //Member functions
+    void set_window_properties();
     void init_architecture();
     void stage_position_setup();
     void x_axis_setup();
@@ -135,5 +136,13 @@ typedef struct settings
     float origin[2];
     int shutter_status;
 }FL_settings;
+
+///Globally required functions
+
+/*///This function sets properties of the window object
+void set_window_properties()
+{
+    MWindow::set_resizable(false);
+}*/
 
 

@@ -8,6 +8,7 @@
 MWindow::MWindow()
 {
     //Call functions to construct architechture
+    set_window_properties();
     init_architecture();
     stage_position_setup();
     x_axis_setup();

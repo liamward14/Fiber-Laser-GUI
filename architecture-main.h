@@ -1,4 +1,12 @@
 ///ARCHITECTURE FXNS
+
+///Function to set base window properties
+void MWindow::set_window_properties()
+{
+    set_resizable(false);
+    set_icon_from_file("Industry-Laser-Beam-icon.png");
+}
+
 ///Function to setup the base architecture
 void MWindow::init_architecture()
 {
@@ -22,9 +30,10 @@ void MWindow::init_architecture()
     //Add main frames and boxes
     p_grid.attach(f_1_1_1,0,0,3,1);
     p_grid.attach(f_1_1_2,0,1,3,1);
-    p_grid.attach(f_1_1_3,0,2,2,1);
+    p_grid.attach(f_1_1_3,0,2);
     p_grid.attach(f_1_1_4,3,0,1,2);
-    p_grid.attach(f_1_1_5,2,2,2,1);
+    p_grid.attach(f_1_1_5,3,2);
+    p_grid.attach(b_2_6_1,1,2,2,1); //padding
 
     f_1_1_1.add(b_2_1_1);
     f_1_1_2.add(b_2_2_1);
@@ -38,6 +47,11 @@ void MWindow::init_architecture()
     f_1_1_3.set_label("X-Axis");
     f_1_1_5.set_label("Y-Axis");
     f_1_1_4.set_label("Predefined Functions");
+    f_1_1_3.set_hexpand(false);
+    b_2_3_1.set_hexpand(false);
+    b_2_5_1.set_hexpand(false);
+    b_2_6_1.set_size_request(275,1);
+    b_2_4_1.set_halign(Gtk::ALIGN_CENTER);
     f_1_1_1.override_font(f);
     f_1_1_2.override_font(f);
     f_1_1_3.override_font(f);
@@ -176,7 +190,7 @@ void MWindow::x_axis_setup()
     //Labels & Styling
     lab_4_2_1.set_label("Jog");
     lab_4_2_2.set_label("Step");
-    lab_4_2_3.set_hexpand(true);
+    //lab_4_2_3.set_hexpand(true);
     lab_4_2_4.set_label("Step");
     lab_4_2_5.set_label("Jog");
 
@@ -470,7 +484,6 @@ void MWindow::shutter_control_setup()
 
     //lab_3_5_2.set_label("Open");
     //lab_3_5_3.set_label("Closed");
-
 
 }
 ///END OF ARCHITECTURE FXNS
