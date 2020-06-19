@@ -105,4 +105,15 @@ void MWindow::on_send_success()
     dialog.run();
 }
 
+///Function to display final quit ask
+int MWindow::on_quit_request()
+{
+    string msg = "Are you sure you want to quit?";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION,Gtk::BUTTONS_OK_CANCEL);
+    int result = dialog.run();
+    return result;
+}
+
 ///END OF DIALOG FXNS

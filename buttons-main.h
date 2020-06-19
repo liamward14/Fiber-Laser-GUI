@@ -16,12 +16,24 @@ void MWindow::button_signals()
     but_5_3_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m2r_button_clicked));
     but_3_4_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_send_button_clicked));
     but_3_4_6.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_clear_button_clicked));
+    but_5_2_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m3_button_clicked));
+    but_5_4_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m3r_button_clicked));
+    but_5_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4_button_clicked));
+    but_5_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4r_button_clicked));
 }
 
 ///Function to define quit button response
 void MWindow::on_qbutton_clicked()
 {
-    hide();
+    int result = -1*(on_quit_request());
+    switch(result)
+    {
+    case 5:
+        hide();
+        break;
+    case 6:
+        return;
+    }
 }
 
 ///Function to define Send button response
@@ -29,7 +41,6 @@ void MWindow::on_send_button_clicked()
 {
     //Need to send info via serial communication
     //There will be a placeholder here for now
-    std::cout << "Send clicked" << std::endl;
     on_send_success(); //display dialog
 }
 
@@ -247,8 +258,8 @@ void MWindow::on_go_to_button_clicked()
     ent_4_1_1.get_buffer()->set_text(current_x);
     ent_4_1_2.get_buffer()->set_text(current_y);
 
-    ent_4_1_5.get_buffer()->set_text("");
-    ent_4_1_6.get_buffer()->set_text("");
+    ent_4_1_5.get_buffer()->set_text("0.00000");
+    ent_4_1_6.get_buffer()->set_text("0.00000");
 }
 
 ///Function to define Display Origin button response
@@ -319,6 +330,62 @@ void MWindow::on_m2r_button_clicked()
     ent_4_1_2.get_buffer()->set_text(to_string(m2.abs_y));
     ent_4_1_3.get_buffer()->set_text(to_string(m2.rel_x));
     ent_4_1_4.get_buffer()->set_text(to_string(m2.rel_y));
+    on_internal_load_success();
+}
+
+///Function to define M3 + save button response
+void MWindow::on_m3_button_clicked()
+{
+    try
+    {
+        m3.abs_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
+        m3.abs_y = atof((ent_4_1_2.get_buffer()->get_text()).data());
+        m3.rel_x = atof((ent_4_1_3.get_buffer()->get_text()).data());
+        m3.rel_y = atof((ent_4_1_4.get_buffer()->get_text()).data());
+    }
+    catch(...)
+    {
+        on_general_error(); //this may not be right...will have to check
+    }
+    on_pos_stored_successfully();
+}
+
+///Function to define M3 R recall button response
+void MWindow::on_m3r_button_clicked()
+{
+    //Need to connect to backend still
+    ent_4_1_1.get_buffer()->set_text(to_string(m3.abs_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(m3.abs_y));
+    ent_4_1_3.get_buffer()->set_text(to_string(m3.rel_x));
+    ent_4_1_4.get_buffer()->set_text(to_string(m3.rel_y));
+    on_internal_load_success();
+}
+
+///Function to define M4 + save button response
+void MWindow::on_m4_button_clicked()
+{
+    try
+    {
+        m4.abs_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
+        m4.abs_y = atof((ent_4_1_2.get_buffer()->get_text()).data());
+        m4.rel_x = atof((ent_4_1_3.get_buffer()->get_text()).data());
+        m4.rel_y = atof((ent_4_1_4.get_buffer()->get_text()).data());
+    }
+    catch(...)
+    {
+        on_general_error(); //this may not be right...will have to check
+    }
+    on_pos_stored_successfully();
+}
+
+///Function to define M4 R recall button response
+void MWindow::on_m4r_button_clicked()
+{
+    //Need to connect to backend still
+    ent_4_1_1.get_buffer()->set_text(to_string(m4.abs_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(m4.abs_y));
+    ent_4_1_3.get_buffer()->set_text(to_string(m4.rel_x));
+    ent_4_1_4.get_buffer()->set_text(to_string(m4.rel_y));
     on_internal_load_success();
 }
 

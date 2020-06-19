@@ -107,6 +107,10 @@ protected:
     void on_m1r_button_clicked();
     void on_m2_button_clicked();
     void on_m2r_button_clicked();
+    void on_m3_button_clicked();
+    void on_m3r_button_clicked();
+    void on_m4_button_clicked();
+    void on_m4r_button_clicked();
     void on_pos_stored_successfully();
     int on_save_error();
     void on_save_success();
@@ -117,6 +121,7 @@ protected:
     void on_general_error();
     void on_internal_load_success();
     void on_send_success();
+    int on_quit_request();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 
@@ -124,6 +129,8 @@ protected:
     Gdk::RGBA colour = Gdk::RGBA(Glib::ustring("rgb(19,206,13)"));
     Pango::FontDescription f = Pango::FontDescription(Glib::ustring("Sans Bold 10"));
     Pango::FontDescription f2 = Pango::FontDescription(Glib::ustring("Sans 9"));
+    Pango::FontDescription f3 = Pango::FontDescription(Glib::ustring("Sans 8"));
+
 };
 
 ///Other important definitions

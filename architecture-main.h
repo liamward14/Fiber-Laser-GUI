@@ -88,6 +88,8 @@ void MWindow::stage_position_setup()
     lab_4_1_1.set_label("Absolute Position");
     lab_4_pad_1.set_hexpand(true);
     but_4_1_2.set_label("Set Origin");
+    ent_4_1_1.get_buffer()->set_text("0.00000"); //default
+    ent_4_1_2.get_buffer()->set_text("0.00000"); //default
 
     ///Row 1
     p_grid_3_1.attach(lab_4_1_2,0,1);
@@ -98,6 +100,8 @@ void MWindow::stage_position_setup()
     //Labels & Styling
     lab_4_1_2.set_label("Relative Position");
     but_4_1_5.set_label("Display Origin");
+    ent_4_1_3.get_buffer()->set_text("0.00000"); //default
+    ent_4_1_4.get_buffer()->set_text("0.00000"); //default
 
     ///Row 2
     p_grid_3_1.attach(but_4_1_1,0,2);
@@ -106,6 +110,11 @@ void MWindow::stage_position_setup()
 
     //Labels & Styling
     but_4_1_1.set_label("Go to Position");
+    ent_4_1_5.override_font(f3); //set to font 3 (smaller)
+    ent_4_1_6.override_font(f3);
+    ent_4_1_5.get_buffer()->set_text("0.00000"); //default
+    ent_4_1_6.get_buffer()->set_text("0.00000"); //default
+
 
     ///Row 3
     p_grid_3_1.attach(lab_4_1_3,0,3);
