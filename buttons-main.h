@@ -22,6 +22,7 @@ void MWindow::button_signals()
     but_5_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4_button_clicked));
     but_5_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4r_button_clicked));
     but_4_1_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_joystick_off_button_clicked));
+    but_4_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_left_step_button_pressed));
 }
 
 ///Function to define quit button response
@@ -420,6 +421,32 @@ void MWindow::on_m4r_button_clicked()
     ent_4_1_3.get_buffer()->set_text(to_string(m4.rel_x));
     ent_4_1_4.get_buffer()->set_text(to_string(m4.rel_y));
     on_internal_load_success();
+}
+
+///Function to define x-axis left step button response
+void MWindow::on_x_left_step_button_pressed()
+{
+    float current_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
+    float step_size = atof((spb_4_2_1.get_buffer()->get_text()).data());
+    float new_x = current_x - step_size;
+    if (new_x<-25)
+    {
+        on_range_violated();
+        float x_left_limit = -25;
+        ent_4_1_1.get_buffer()->set_text(to_string(x_left_limit));
+        return;
+    }
+    else if (new_x>25)
+    {
+        on_range_violated();
+        float x_right_limit = 25; //NEED TO CHANGE THIS - ACTUAL SYSTEM IS MM not MICROMeters
+        ent_4_1_1.get_buffer()->set_text(to_string(x_right_limit));
+        return;
+    }
+    else
+    {
+    ent_4_1_1.get_buffer()->set_text(to_string(new_x));
+    }
 }
 
 ///END OF BUTTON RESPONSE FXNS

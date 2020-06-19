@@ -113,6 +113,7 @@ protected:
     void on_m3r_button_clicked();
     void on_m4_button_clicked();
     void on_m4r_button_clicked();
+    void on_x_left_step_button_pressed();
     void on_abs_pos_change();
     void on_pos_stored_successfully();
     int on_save_error();
