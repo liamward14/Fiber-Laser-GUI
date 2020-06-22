@@ -23,6 +23,7 @@ void MWindow::button_signals()
     but_5_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4r_button_clicked));
     but_4_1_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_joystick_off_button_clicked));
     but_4_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_left_step_button_pressed));
+    but_4_1_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_relative_origin_button_clicked));
 }
 
 ///Function to define quit button response
@@ -449,4 +450,16 @@ void MWindow::on_x_left_step_button_pressed()
     }
 }
 
+///Function to define Relative Origin button press
+void MWindow::on_relative_origin_button_clicked()
+{
+    //Will go to current origin position
+    float origin_x = stored_origin.origin_x;
+    float origin_y = stored_origin.origin_y;
+
+    ent_4_1_1.get_buffer()->set_text(to_string(origin_x));
+    ent_4_1_2.get_buffer()->set_text(to_string(origin_y));
+
+    on_abs_pos_change();
+}
 ///END OF BUTTON RESPONSE FXNS
