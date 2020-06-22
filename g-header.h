@@ -65,6 +65,16 @@ protected:
     Glib::RefPtr<Gtk::CssProvider> css_provider_close = Gtk::CssProvider::create();
 
     ///Data storage
+    //Structure type def to hold settings data
+    typedef struct settings
+    {
+        Glib::ustring name;
+        float abs_x;
+        float abs_y;
+        float origin[2];
+        int shutter_status;
+    }FL_settings;
+
     //Structure type def to hold origin data
     typedef struct origin
     {
@@ -114,7 +124,17 @@ protected:
     void on_m3r_button_clicked();
     void on_m4_button_clicked();
     void on_m4r_button_clicked();
-    void on_x_left_step_button_pressed();
+    void on_x_left_step_button_clicked();
+    void on_x_left_jog_button_clicked();
+    void on_x_right_step_button_clicked();
+    void on_x_right_jog_button_clicked();
+    void on_x_stop_button_clicked();
+    void on_home_x_button_clicked();
+    void on_y_left_step_button_clicked();
+    void on_y_left_jog_button_clicked();
+    void on_y_right_step_button_clicked();
+    void on_y_right_jog_button_clicked();
+    void on_home_y_button_clicked();
     void on_abs_pos_change();
     void on_pos_stored_successfully();
     int on_save_error();
@@ -129,6 +149,7 @@ protected:
     int on_quit_request();
     void on_range_violated();
     void on_joystick_off_button_clicked();
+    void on_general_clicked();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 
@@ -141,22 +162,8 @@ protected:
 };
 
 ///Other important definitions
-//Structure type def to hold settings data
-typedef struct settings
-{
-    Glib::ustring name;
-    float abs_x;
-    float abs_y;
-    float origin[2];
-    int shutter_status;
-}FL_settings;
 
 ///Globally required functions
 
-/*///This function sets properties of the window object
-void set_window_properties()
-{
-    MWindow::set_resizable(false);
-}*/
 
 

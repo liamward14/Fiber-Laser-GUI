@@ -146,4 +146,14 @@ void MWindow::on_joystick_off_button_clicked()
     dialog.run();
 }
 
+///Function for click response (only for debug, not deployement)
+void MWindow::on_general_clicked()
+{
+    string msg = "Clicked!";
+    Gtk::MessageDialog dialog(*this,
+    msg.c_str(),
+    false,Gtk::MESSAGE_QUESTION);
+    dialog.run();
+}
+
 ///END OF DIALOG FXNS

@@ -22,8 +22,18 @@ void MWindow::button_signals()
     but_5_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4_button_clicked));
     but_5_4_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_m4r_button_clicked));
     but_4_1_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_joystick_off_button_clicked));
-    but_4_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_left_step_button_pressed));
+    but_4_2_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_left_step_button_clicked));
     but_4_1_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_relative_origin_button_clicked));
+    but_4_2_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_right_step_button_clicked));
+    but_4_2_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_right_jog_button_clicked));
+    but_4_2_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_left_jog_button_clicked));
+    but_4_2_6.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_home_x_button_clicked));
+    but_4_2_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_x_stop_button_clicked));
+    but_4_3_2.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_y_left_step_button_clicked));
+    but_4_3_1.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_y_left_jog_button_clicked));
+    but_4_3_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_y_right_step_button_clicked));
+    but_4_3_5.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_y_right_jog_button_clicked));
+    but_4_3_6.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_home_y_button_clicked));
 }
 
 ///Function to define quit button response
@@ -274,11 +284,13 @@ void MWindow::on_set_origin_button_clicked()
         {
             ent_4_1_2.get_buffer()->set_text("25");
         }
+        on_abs_pos_change();
         return;
     }
     stored_origin.origin_x = ox;
     stored_origin.origin_y = oy;
     on_set_origin_success();
+    on_abs_pos_change();
 }
 
 ///Function to define Go To Position button response
@@ -288,6 +300,37 @@ void MWindow::on_go_to_button_clicked()
     float current_x = atof((ent_4_1_5.get_buffer()->get_text()).data());
     float current_y = atof((ent_4_1_6.get_buffer()->get_text()).data());
 
+    if (abs(current_x)>25 || abs(current_y)>25)
+    {
+        //Display message dialog
+        on_range_violated();
+
+        //Set to max params for x
+        if(current_x<-25)
+        {
+            ent_4_1_1.get_buffer()->set_text("-25");
+        }
+        else if (current_x>25)
+        {
+            ent_4_1_1.get_buffer()->set_text("25");
+        }
+
+        //Set to max params for y
+        if(current_y<-25)
+        {
+            ent_4_1_2.get_buffer()->set_text("-25");
+        }
+        else if (current_y>25)
+        {
+            ent_4_1_2.get_buffer()->set_text("25");
+        }
+        ent_4_1_5.get_buffer()->set_text("0.00000"); //reset go-to entries
+        ent_4_1_6.get_buffer()->set_text("0.00000");
+        on_abs_pos_change(); //adjust relative position
+        return; //exit
+    }
+
+    //if no errors, execute go-to command(s)
     ent_4_1_1.get_buffer()->set_text(to_string(current_x));
     ent_4_1_2.get_buffer()->set_text(to_string(current_y));
 
@@ -425,7 +468,7 @@ void MWindow::on_m4r_button_clicked()
 }
 
 ///Function to define x-axis left step button response
-void MWindow::on_x_left_step_button_pressed()
+void MWindow::on_x_left_step_button_clicked()
 {
     float current_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
     float step_size = atof((spb_4_2_1.get_buffer()->get_text()).data());
@@ -435,6 +478,7 @@ void MWindow::on_x_left_step_button_pressed()
         on_range_violated();
         float x_left_limit = -25;
         ent_4_1_1.get_buffer()->set_text(to_string(x_left_limit));
+        on_abs_pos_change();
         return;
     }
     else if (new_x>25)
@@ -442,12 +486,154 @@ void MWindow::on_x_left_step_button_pressed()
         on_range_violated();
         float x_right_limit = 25; //NEED TO CHANGE THIS - ACTUAL SYSTEM IS MM not MICROMeters
         ent_4_1_1.get_buffer()->set_text(to_string(x_right_limit));
+        on_abs_pos_change();
         return;
     }
     else
     {
     ent_4_1_1.get_buffer()->set_text(to_string(new_x));
+    on_abs_pos_change();
     }
+}
+
+///Function to define x-axis left jog button response
+void MWindow::on_x_left_jog_button_clicked()
+{
+    //nothing yet
+    on_general_clicked();
+}
+
+///Fucntion to define x-axis right step button response
+void MWindow::on_x_right_step_button_clicked()
+{
+    float current_x = atof((ent_4_1_1.get_buffer()->get_text()).data());
+    float step_size = atof((spb_4_2_1.get_buffer()->get_text()).data());
+    float new_x = current_x + step_size;
+    if (new_x<-25)
+    {
+        on_range_violated();
+        float x_left_limit = -25;
+        ent_4_1_1.get_buffer()->set_text(to_string(x_left_limit));
+        on_abs_pos_change();
+        return;
+    }
+    else if (new_x>25)
+    {
+        on_range_violated();
+        float x_right_limit = 25; //NEED TO CHANGE THIS - ACTUAL SYSTEM IS MM not MICROMeters
+        ent_4_1_1.get_buffer()->set_text(to_string(x_right_limit));
+        on_abs_pos_change();
+        return;
+    }
+    else
+    {
+    ent_4_1_1.get_buffer()->set_text(to_string(new_x));
+    on_abs_pos_change();
+    }
+}
+
+///Function to define x-axis right jog button response
+void MWindow::on_x_right_jog_button_clicked()
+{
+    //nothing yet
+    on_general_clicked();
+}
+
+///Function to define x-axis 'Home X' button response
+void MWindow::on_home_x_button_clicked()
+{
+    //Need to connect to backend still
+    float hx = stored_origin.origin_x;
+    ent_4_1_1.get_buffer()->set_text(to_string(hx));
+    on_abs_pos_change();
+}
+
+///Function to define x-axis 'Stop' button response
+void MWindow::on_x_stop_button_clicked()
+{
+    //Nothign yet - need to integrate with backend
+    on_general_clicked();
+}
+
+///Function to define y-axis left step button response
+void MWindow::on_y_left_step_button_clicked()
+{
+    float current_y = atof((ent_4_1_2.get_buffer()->get_text()).data());
+    float step_size = atof((spb_4_3_1.get_buffer()->get_text()).data());
+    float new_y = current_y - step_size;
+    if (new_y<-25)
+    {
+        on_range_violated();
+        float y_left_limit = -25;
+        ent_4_1_2.get_buffer()->set_text(to_string(y_left_limit));
+        on_abs_pos_change();
+        return;
+    }
+    else if (new_y>25)
+    {
+        on_range_violated();
+        float y_right_limit = 25; //NEED TO CHANGE THIS - ACTUAL SYSTEM IS MM not MICROMeters
+        ent_4_1_2.get_buffer()->set_text(to_string(y_right_limit));
+        on_abs_pos_change();
+        return;
+    }
+    else
+    {
+    ent_4_1_2.get_buffer()->set_text(to_string(new_y));
+    on_abs_pos_change();
+    }
+}
+
+///Function to define y-axis left jog button response
+void MWindow::on_y_left_jog_button_clicked()
+{
+    //nothing yet, need to connect w/ backend
+    on_general_clicked();
+}
+
+///Function to define y-axis right step button response
+void MWindow::on_y_right_step_button_clicked()
+{
+    float current_y = atof((ent_4_1_2.get_buffer()->get_text()).data());
+    float step_size = atof((spb_4_3_1.get_buffer()->get_text()).data());
+    float new_y = current_y + step_size;
+    if (new_y<-25)
+    {
+        on_range_violated();
+        float y_left_limit = -25;
+        ent_4_1_2.get_buffer()->set_text(to_string(y_left_limit));
+        on_abs_pos_change();
+        return;
+    }
+    else if (new_y>25)
+    {
+        on_range_violated();
+        float y_right_limit = 25; //NEED TO CHANGE THIS - ACTUAL SYSTEM IS MM not MICROMeters
+        ent_4_1_2.get_buffer()->set_text(to_string(y_right_limit));
+        on_abs_pos_change();
+        return;
+    }
+    else
+    {
+    ent_4_1_2.get_buffer()->set_text(to_string(new_y));
+    on_abs_pos_change();
+    }
+}
+
+///Function to define y-axis right jog button response
+void MWindow::on_y_right_jog_button_clicked()
+{
+    //nothing yet, need to connect w/ backend
+    on_general_clicked();
+}
+
+///Function to define 'Home Y' button response
+void MWindow::on_home_y_button_clicked()
+{
+    //need to connect w/ backend still
+    float hy = stored_origin.origin_y;
+    ent_4_1_2.get_buffer()->set_text(to_string(hy));
+    on_abs_pos_change();
 }
 
 ///Function to define Relative Origin button press
