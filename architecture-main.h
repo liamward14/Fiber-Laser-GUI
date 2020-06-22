@@ -402,6 +402,7 @@ void MWindow::predefined_fxns_setup()
     cbt_3_4_1.append("None");
     cbt_3_4_1.append("Sample Function 1");
     cbt_3_4_1.append("Sample Function 2");
+    cbt_3_4_1.set_sensitive(false); //off by default
     //cbt_3_4_1.set_active(1);
 
     ///Row 6
