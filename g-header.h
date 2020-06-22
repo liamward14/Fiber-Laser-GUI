@@ -4,7 +4,13 @@
 #include <fstream>
 #include <cmath>
 #include <typeinfo>
+#include <windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstdio>
 #include <boost/algorithm/string.hpp>
+#define ARDUINO_WAIT_TIME 200
+
 using namespace std;
 
 ///Class definitions
@@ -135,6 +141,7 @@ protected:
     void on_y_right_step_button_clicked();
     void on_y_right_jog_button_clicked();
     void on_home_y_button_clicked();
+    void on_y_stop_button_clicked();
     void on_abs_pos_change();
     void on_pos_stored_successfully();
     int on_save_error();
@@ -150,6 +157,7 @@ protected:
     void on_range_violated();
     void on_joystick_off_button_clicked();
     void on_general_clicked();
+    void on_serial_error();
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 
@@ -161,9 +169,41 @@ protected:
 
 };
 
-///Other important definitions
+///Define Serial Class
+class Serial : public MWindow
+{
+private:
+    //Serial comms handler
+    HANDLE hSerial;
 
-///Globally required functions
+    //Connection Status
+    bool connected;
 
+    //Information about connection
+    COMSTAT status;
+
+    //Error tracking
+    DWORD errors;
+
+public:
+    //Initialize with port name
+    Serial(const char *port_name);
+
+    //Destructor (close port connection)
+    ~Serial();
+
+    //Read data in a buffer
+    int ReadData(char *buffer,unsigned int mChar);
+
+    //Write data through a buffer
+    bool WriteData(const char* buffer,unsigned int mChar);
+
+    //Check connection
+    bool IsConnected();
+
+    //Change connection settings
+    //int set_serial_params(DWORD baudRate,BYTE byteSize,BYTE stopBits,BYTE parity);
+
+};
 
 
