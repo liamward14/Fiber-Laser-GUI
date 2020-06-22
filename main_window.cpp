@@ -1,15 +1,13 @@
 #include "g-header.h"
-#include "dialog-main.h"
-#include "buttons-main.h"
-#include "architecture-main.h"
 #include "actions-main.h"
-
-
+#include "architecture-main.h"
+#include "buttons-main.h"
+#include "dialog-main.h"
 //This file will define constructor & destructor of the MWindow class
 
 MWindow::MWindow()
 {
-    //Call functions to construct architechture
+    //Call functions to construct architecture
     set_window_properties();
     init_architecture();
     stage_position_setup();

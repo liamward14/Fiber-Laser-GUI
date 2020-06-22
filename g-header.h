@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <cctype>
 #include <typeinfo>
 #include <windows.h>
 #include <stdio.h>
@@ -59,7 +60,7 @@ protected:
     Gtk::TextView tv_3_4_1;
     Gtk::ComboBoxText cbt_3_4_1;
     Gtk::Entry ent_3_4_1,ent_3_4_2;
-    Gtk::Button but_3_4_1,but_3_4_2,but_3_4_3,but_3_4_4,but_3_4_5,but_3_4_6;
+    Gtk::Button but_3_4_1,but_3_4_2,but_3_4_3,but_3_4_4,but_3_4_5,but_3_4_6,but_3_4_7;
 
     ///shutter_control_setup members
     Gtk::Grid p_grid_3_5;
@@ -118,6 +119,7 @@ protected:
     void on_open_button_clicked();
     void on_close_button_clicked();
     void on_load_button_clicked();
+    void on_enable_disable_button_clicked();
     void on_set_origin_button_clicked();
     void on_go_to_button_clicked();
     void on_display_origin_button_clicked();
@@ -158,6 +160,7 @@ protected:
     void on_joystick_off_button_clicked();
     void on_general_clicked();
     void on_serial_error();
+    void on_pre_functions_enabled_disabled(std::string);
     int counter=0; //this is for the shutter status fxn (temporary soln.)
     bool open = false; //this is for saving shutter settings (find better soln??)
 

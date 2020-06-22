@@ -1,12 +1,19 @@
 # depslib dependency file v1.0
-1592319967 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\main.cpp
+1592578820 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\main.cpp
 	"g-header.h"
 
-1592575145 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\g-header.h
+1592860650 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\g-header.h
 	<gtkmm-3.0/gtkmm.h>
 	<cstdio>
 	<iostream>
 	<fstream>
+	<cmath>
+	<cctype>
+	<typeinfo>
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<cstdio>
 	<boost/algorithm/string.hpp>
 
 1573308746 c:\msys64\mingw64\include\gtkmm-3.0\gtkmm.h
@@ -7118,11 +7125,12 @@
 	<sigc++/sigc++.h>
 	<gtkmm/scalebutton.h>
 
-1592503469 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\main_window.cpp
+1592858787 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\main_window.cpp
 	"g-header.h"
-	"dialog-main.h"
-	"buttons-main.h"
+	"actions-main.h"
 	"architecture-main.h"
+	"buttons-main.h"
+	"dialog-main.h"
 
 1592417526 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\file_io_error_dialog_window.cpp
 	"g-header.h"
@@ -10533,9 +10541,24 @@
 
 1592503048 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\buttons.h
 
-1592575475 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\dialog-main.h
+1592860641 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\dialog-main.h
 
-1592575515 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\buttons-main.h
+1592860625 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\buttons-main.h
 
-1592574654 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\architecture-main.h
+1592860344 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\architecture-main.h
+
+1592858830 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\actions-main.h
+
+1592856083 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\serial-def.h
+	"serial.h"
+
+1592856147 c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\serial.h
+	<windows.h>
+	<stdio.h>
+	<stdlib.h>
+	<cstdio>
+	"g-header.h"
+
+1592856528 source:c:\users\liamw\onedrive\mcmasteruniversity\2019-2020 school year\_research\motorizedmachiningproject\code\c++\projectcode\fiber-laser-gui\fiber-laser-gui\serial.cpp
+	"g-header.h"
 

@@ -36,6 +36,8 @@
 		<Linker>
 			<Add option="`pkg-config gtkmm-3.0 --libs`" />
 		</Linker>
+		<Unit filename="Serial.cpp" />
+		<Unit filename="actions-main.h" />
 		<Unit filename="architecture-main.h" />
 		<Unit filename="buttons-main.h" />
 		<Unit filename="dialog-main.h" />
