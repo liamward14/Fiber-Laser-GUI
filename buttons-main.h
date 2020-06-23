@@ -36,6 +36,7 @@ void MWindow::button_signals()
     but_4_3_6.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_home_y_button_clicked));
     but_4_3_3.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_y_stop_button_clicked));
     but_3_4_7.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_enable_disable_button_clicked));
+    but_3_4_4.signal_clicked().connect(sigc::mem_fun(*this,&MWindow::on_begin_button_clicked));
 }
 
 ///Function to define quit button response
@@ -673,6 +674,13 @@ void MWindow::on_relative_origin_button_clicked()
 void MWindow::on_y_stop_button_clicked()
 {
     //need to integrate w/ backend still
+    on_general_clicked();
+}
+
+///Function to define response to 'Begin' button
+void MWindow::on_begin_button_clicked()
+{
+    //Need to connect to backend still
     on_general_clicked();
 }
 

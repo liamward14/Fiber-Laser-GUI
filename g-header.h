@@ -144,6 +144,7 @@ protected:
     void on_y_right_jog_button_clicked();
     void on_home_y_button_clicked();
     void on_y_stop_button_clicked();
+    void on_begin_button_clicked();
     void on_abs_pos_change();
     void on_pos_stored_successfully();
     int on_save_error();
